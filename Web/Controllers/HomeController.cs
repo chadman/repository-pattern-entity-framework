@@ -17,18 +17,18 @@ namespace Web.Controllers {
 
     public class HomeRepository : BaseRepository, IHomeRepository {
         public List<Employee> FindEmployees() {
-            return (from e in this.DBContext.Employees
+            return (from e in base.DBContext.Employees
                     select e).ToList();
         }
 
         public bool Save() {
             try {
-                this.DBContext.SaveChanges();
+                base.DBContext.SaveChanges();
                 return true;
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex) {
                 foreach (DbEntityValidationResult result in ex.EntityValidationErrors) {
-                    this.RepositoryDatabaseErrors.Add(result);
+                    base.RepositoryDatabaseErrors.Add(result);
                 }
                 return false;
             }
